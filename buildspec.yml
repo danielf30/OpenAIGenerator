@@ -1,0 +1,23 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.8  # Cambia a la versión de Python que uses
+    commands:
+      - echo Installing dependencies...
+      - pip install --upgrade pip
+      - pip install -r requirements.txt -t .
+  pre_build:
+    commands:
+      - echo Pre-build phase...
+  build:
+    commands:
+      - echo Build started on `date`
+      - zip -r OpenAIGenerator.zip ./*
+  post_build:
+    commands:
+      - echo Build completed on `date`
+artifacts:
+  files:
+    - OpenAIGenerator.zip
