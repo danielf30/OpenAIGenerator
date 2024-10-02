@@ -3,7 +3,7 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      python: 3.9  # Cambia a la versión de Python que uses
+      python: 3.9
     commands:
       - echo Installing dependencies...
       - pip install --upgrade pip
@@ -11,10 +11,13 @@ phases:
   pre_build:
     commands:
       - echo Pre-build phase...
+      # Eliminar el archivo ZIP anterior si existe
+      - rm -f OpenAIGenerator.zip
   build:
     commands:
       - echo Build started on `date`
-      - zip -r OpenAIGenerator.zip ./* -x OpenAIGenerator.zip
+      # Empaquetar el proyecto excluyendo cualquier archivo anterior ZIP
+      - zip -r OpenAIGenerator.zip ./*
   post_build:
     commands:
       - echo Build completed on `date`
