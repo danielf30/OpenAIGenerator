@@ -8,6 +8,7 @@ phases:
       - echo Instalando dependencias...
       - pip install --upgrade pip
       - pwd
+      - ls
   pre_build:
     commands:
       - echo Fase de pre-construcción...
@@ -19,19 +20,15 @@ phases:
   build:
     commands:
       - echo Construcción iniciada en `date`
-      - pwd
-      - ls
       # Instalar las dependencias en el directorio 'package'
-      - pip install -r requirements.txt -t package/
-      # Copiar todos los archivos excepto 'package/' y cualquier archivo ZIP existente
-      - rsync -av --exclude='package/' --exclude='*.zip' . package/
-      # Navegar al directorio 'package' y comprimir solo los archivos y carpetas contenidos allí
-      - cd package && zip -r ../OpenAIGenerator.zip ./*
+      - pip install -r requirements.txt -t .
       - pwd
       - ls
+      - zip -r archivo_comprimido.zip ./* -x buildspec.yml -x .gitignore
+      - unzip -l archivo_comprimido.zip
   post_build:
     commands:
       - echo Construcción completada en `date`
 artifacts:
   files:
-    - OpenAIGenerator.zip
+    - archivo_comprimido.zip
