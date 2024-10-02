@@ -5,22 +5,27 @@ phases:
     runtime-versions:
       python: 3.9
     commands:
-      - echo Installing dependencies...
+      - echo Instalando dependencias...
       - pip install --upgrade pip
-      - pip install -r requirements.txt -t .
   pre_build:
     commands:
-      - echo Pre-build phase...
-      # Eliminar el archivo ZIP anterior si existe
+      - echo Fase de pre-construcción...
+      # Eliminar el directorio de empaquetado y el archivo ZIP anterior si existen
+      - rm -rf package
+      - mkdir -p package
       - rm -f OpenAIGenerator.zip
   build:
     commands:
-      - echo Build started on `date`
-      # Empaquetar el proyecto excluyendo cualquier archivo anterior ZIP
-      - zip -r OpenAIGenerator.zip ./*
+      - echo Construcción iniciada en `date`
+      # Instalar dependencias en el directorio 'package'
+      - pip install -r requirements.txt -t package/
+      # Copiar el código fuente de la Lambda al directorio 'package', incluyendo el directorio 'utils'
+      - cp -r *.py utils package/
+      # Crear el paquete de implementación ZIP
+      - cd package && zip -r ../OpenAIGenerator.zip .
   post_build:
     commands:
-      - echo Build completed on `date`
+      - echo Construcción completada en `date`
 artifacts:
   files:
     - OpenAIGenerator.zip
