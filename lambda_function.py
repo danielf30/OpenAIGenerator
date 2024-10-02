@@ -75,4 +75,4 @@ def lambda_handler(event, context):
 #    result = lambda_openai_handler(event)
 #    
 #    # Imprimir el resultado de la ejecución
-#    print(result)
+#    prin
