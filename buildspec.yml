@@ -7,14 +7,17 @@ phases:
     commands:
       - echo Instalando dependencias...
       - pip install --upgrade pip
-      - pip install -r requirements.txt -t .
   pre_build:
     commands:
       - echo Fase de pre-construcción...
+      # Eliminar cualquier archivo ZIP previo si existe
+      - rm -f OpenAIGenerator.zip
   build:
     commands:
       - echo Construcción iniciada en `date`
-      - zip -r OpenAIGenerator.zip .
+      - cd OpenAIGenerator
+      # Comprimir todos los archivos y subdirectorios en el archivo ZIP
+      - zip -r OpenAIGenerator.zip ./*
   post_build:
     commands:
       - echo Construcción completada en `date`
