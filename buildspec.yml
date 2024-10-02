@@ -18,8 +18,8 @@ phases:
       - echo Construcción iniciada en `date`
       # Instalar las dependencias en el directorio 'package'
       - pip install -r requirements.txt -t package/
-      # Copiar todos los archivos del proyecto en el directorio 'package'
-      - cp -r * package/
+      # Copiar todos los archivos y directorios excepto 'package/' al directorio 'package'
+      - rsync -av --exclude=package/ . package/
       # Comprimir todos los archivos en el archivo ZIP
       - cd package
       - zip -r ../OpenAIGenerator.zip ./*
