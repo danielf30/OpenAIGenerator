@@ -12,13 +12,12 @@ phases:
       - echo Fase de pre-construcción...
       # Eliminar el directorio de empaquetado y el archivo ZIP anterior si existen
       - rm -rf package
-      - mkdir -p package
+      - mkdir package
       - rm -f OpenAIGenerator.zip
   build:
     commands:
       - echo Construcción iniciada en `date`
       # Instalar dependencias en el directorio 'package'
-      - mkdir package
       - pip install -r requirements.txt -t package/
       # Copiar el código fuente de la Lambda al directorio 'package', incluyendo el directorio 'utils'
       - cd package
