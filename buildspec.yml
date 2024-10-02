@@ -21,8 +21,10 @@ phases:
       - pip install -r requirements.txt -t package/
       # Copiar el código fuente de la Lambda al directorio 'package', incluyendo el directorio 'utils'
       - cp -r *.py utils package/
-      # Crear el paquete de implementación ZIP
-      - cd package && zip -r ../OpenAIGenerator.zip .
+      # Asegurarse de que el archivo ZIP no esté en el directorio 'package'
+      - rm -f package/OpenAIGenerator.zip
+      # Crear el paquete de implementación ZIP excluyendo el archivo ZIP en caso de que exista
+      - cd package && zip -r ../OpenAIGenerator.zip . --exclude ../OpenAIGenerator.zip
   post_build:
     commands:
       - echo Construcción completada en `date`
