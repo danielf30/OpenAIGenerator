@@ -18,13 +18,16 @@ phases:
     commands:
       - echo Construcción iniciada en `date`
       # Instalar dependencias en el directorio 'package'
+      - mkdir package
       - pip install -r requirements.txt -t package/
       # Copiar el código fuente de la Lambda al directorio 'package', incluyendo el directorio 'utils'
-      - cp -r *.py utils package/
+      - cd package
+      - zip -r ../OpenAIGenerator.zip .
+      - cd ..
       # Asegurarse de que el archivo ZIP no esté en el directorio 'package'
-      - rm -f package/OpenAIGenerator.zip
+      - rm -f package/OpenAIGenerator*
       # Crear el paquete de implementación ZIP excluyendo el archivo ZIP en caso de que exista
-      - cd package && zip -r ../OpenAIGenerator.zip . --exclude ../OpenAIGenerator.zip
+      - zip OpenAIGenerator.zip utils lambda_function.py requirements.txt
   post_build:
     commands:
       - echo Construcción completada en `date`
