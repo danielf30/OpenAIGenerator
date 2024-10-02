@@ -10,19 +10,11 @@ phases:
   pre_build:
     commands:
       - echo Fase de pre-construcción...
-      # Eliminar cualquier archivo ZIP previo si existe
-      - rm -f OpenAIGenerator.zip
-      - mkdir -p package
+      - pip install -r requirements.txt -t .
   build:
     commands:
       - echo Construcción iniciada en `date`
-      # Instalar las dependencias en el directorio 'package'
-      - pip install -r requirements.txt -t package/
-      # Copiar todos los archivos y directorios excepto 'package/' al directorio 'package'
-      - rsync -av --exclude=package/ . package/
-      # Comprimir todos los archivos en el archivo ZIP
-      - cd package
-      - zip -r ../OpenAIGenerator.zip ./*
+      - zip -r OpenAIGenerator.zip ./
   post_build:
     commands:
       - echo Construcción completada en `date`
