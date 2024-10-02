@@ -5,7 +5,7 @@ from utils.text_clean import format_summary
 from utils.openai_verificator import lambda_openai_verifier_handler
 from botocore.exceptions import ClientError
 
-def lambda_handler(event):
+def lambda_handler(event, context):
     # Recuperar la clave API de OpenAI desde AWS Secrets Manager
     secret_name = "openai_api_key"
     region_name = "us-east-1"
