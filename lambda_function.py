@@ -62,17 +62,4 @@ def lambda_handler(event, context):
     content = lambda_openai_verifier_handler(link,content)
     content = format_summary({'content': content})
     print(content)
-    return content
-
-## Simular la ejecución local con un evento de prueba
-#if __name__ == "__main__":
-#    # Crear un evento simulado
-#    event = {
-#        "link": "https://medium.com/@csegura_82503/big-data-introducci%C3%B3n-a-conceptos-y-terminolog%C3%ADa-e1723689a90"
-#    }
-#
-#    # Ejecutar la función Lambda con el evento simulado
-#    result = lambda_openai_handler(event)
-#    
-#    # Imprimir el resultado de la ejecución
-#    prin
+    return {'message': content}
