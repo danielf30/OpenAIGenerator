@@ -34,7 +34,7 @@ def lambda_handler(event, context):
     openai.api_key = secret
     
     # Obtener el enlace del artículo desde el evento de entrada
-    link = event.get('link', '')
+    link = event[0].get('Url', '')
     if not link:
         return {'error': 'No se proporcionó ningún enlace.'}
     
