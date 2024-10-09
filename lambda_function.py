@@ -55,11 +55,28 @@ def lambda_handler(event, context):
             ],
             model="gpt-3.5-turbo",
         )
+        content = response.choices[0].message.content
+        content = lambda_openai_verifier_handler(link,content)
+        content = format_summary({'content': content})
+        message = {'message': content}
+        return {
+            "statusCode": 200,
+            "body": json.dumps(message)
+        }
     except openai.error.RateLimitError:
         return {'error': 'Se alcanzó el límite de tasa de OpenAI. Por favor, intenta de nuevo más tarde.'}
+    except KeyError as e:
+        print(f"Error: Clave no encontrada - {e}")
+        return {
+            "statusCode": 400,
+            "body": json.dumps("Error: Clave no encontrada en el evento.")
+        }
+    except json.JSONDecodeError as e:
+        print(f"Error: No se pudo decodificar el JSON - {e}")
+        return {
+            "statusCode": 400,
+            "body": json.dumps("Error: JSON inválido en InputString.")
+        }
     
-    content = response.choices[0].message.content
-    content = lambda_openai_verifier_handler(link,content)
-    content = format_summary({'content': content})
-    print(content)
-    return {'message': content}
+    
+
