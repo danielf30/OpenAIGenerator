@@ -61,7 +61,7 @@ def lambda_handler(event, context):
         message = {'message': content}
         return {
             "statusCode": 200,
-            "body": json.dumps(message)
+            "body": message
         }
     except openai.error.RateLimitError:
         return {'error': 'Se alcanzó el límite de tasa de OpenAI. Por favor, intenta de nuevo más tarde.'}
