@@ -35,6 +35,7 @@ def lambda_handler(event, context):
     
     # Obtener el enlace del artículo desde el evento de entrada
     link = event[0].get('Url', '')
+    print(link)
     if not link:
         return {'error': 'No se proporcionó ningún enlace.'}
     
@@ -56,8 +57,14 @@ def lambda_handler(event, context):
             model="gpt-3.5-turbo",
         )
         content = response.choices[0].message.content
+        print("content 1")
+        print(content)
         content = lambda_openai_verifier_handler(link,content)
+        print("content 2")
+        print(content)
         content = format_summary({'content': content})
+        print("content 3")
+        print(content)
         message = {'message': content}
         return {
             "statusCode": 200,
